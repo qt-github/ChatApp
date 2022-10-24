@@ -1,6 +1,5 @@
 package com.example.chatapp.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -22,9 +21,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferenceManager =new PreferenceManager(getApplicationContext());
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        preferenceManager =new PreferenceManager(getApplicationContext());
+        //Nếu đã đăng nhập thì vào trang chính
+//        if(preferenceManager.getBoolean(Constants.KEY_IS_LOGIN)){
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        };
         setListeners();
     }
 
@@ -32,15 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         binding.textCreateNewAccount.setOnClickListener(view ->
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class)));
         binding.btnLogin.setOnClickListener(view -> {
-            if(isValisdLogInDetails()){
+            if(isValidLogInDetails()){
                 logIn();
             }
         });
-    }
-
-
-    private void showToast(String message){
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void logIn(){
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult()!=null
-                        && task.getResult().getDocuments().size()>0){
+                            && task.getResult().getDocuments().size() > 0){
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         preferenceManager.putBoolean(Constants.KEY_IS_LOGIN, true);
                         preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
@@ -69,7 +69,23 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private Boolean isValisdLogInDetails(){
+    private void loading(Boolean isLoading){
+        if(isLoading){
+            binding.btnLogin.setVisibility(View.INVISIBLE);
+            binding.progressBar.setVisibility(View.VISIBLE);
+        }else{
+            binding.progressBar.setVisibility(View.INVISIBLE);
+            binding.btnLogin.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showToast(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    private Boolean isValidLogInDetails(){
         if(binding.inputEmail.getText().toString().trim().isEmpty()){
             showToast("Nhập email");
             return false;
@@ -81,15 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    };
-
-    private void loading(Boolean isLoading){
-        if(isLoading){
-            binding.btnLogin.setVisibility(View.INVISIBLE);
-            binding.progressBar.setVisibility(View.VISIBLE);
-        }else{
-            binding.progressBar.setVisibility(View.INVISIBLE);
-            binding.btnLogin.setVisibility(View.VISIBLE);
-        }
     }
+
+
 }
