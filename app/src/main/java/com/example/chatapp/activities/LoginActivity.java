@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private void logIn(){
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        database.collection(Constants.KEY_COLLECTION_USER)
+        database.collection(Constants.KEY_COLLECTION_USERS)
                 .whereEqualTo(Constants.KEY_EMAIL, binding.inputEmail.getText().toString())
                 .whereEqualTo(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString())
                 .get()

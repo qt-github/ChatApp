@@ -47,12 +47,10 @@ public class RegisterActivity extends AppCompatActivity {
                 Register();
             }
         });
-        binding.addImage.setOnClickListener(view -> {
+        binding.layoutImage.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);
-
-
         });
     }
 
@@ -68,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         user.put(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
         user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
         user.put(Constants.KEY_IMAGE, encodeImage);
-        database.collection(Constants.KEY_COLLECTION_USER)
+        database.collection(Constants.KEY_COLLECTION_USERS)
                 .add(user)
                 .addOnSuccessListener(documentReference -> {
                     loading(false);
@@ -83,17 +81,16 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnFailureListener(exception -> {
                     loading(false);
                     showToast(exception.getMessage());
-
                 });
     }
 
-    private String encodeImage(Bitmap bitmap){
+    private String encodeImage(Bitmap bitmap) {
         int previewWidth = 150;
         int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
         Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-        byte [] bytes = byteArrayOutputStream.toByteArray();
+        byte[] bytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
@@ -101,6 +98,23 @@ public class RegisterActivity extends AppCompatActivity {
             new ActivityResultContracts.StartActivityForResult(),
             this::onActivityResult
     );
+
+    private void onActivityResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_OK) {
+            if (result.getData() !=null){
+                Uri imageUri = result.getData().getData();
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    binding.imageProfile.setImageBitmap(bitmap);
+                    binding.addImage.setVisibility(View.GONE);
+                    encodeImage = encodeImage(bitmap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     private Boolean isValidRegisterDetails(){
         if(encodeImage==null){
@@ -135,21 +149,6 @@ public class RegisterActivity extends AppCompatActivity {
         }else{
             binding.progressBar.setVisibility(View.INVISIBLE);
             binding.btnCreate.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void onActivityResult(ActivityResult result) {
-        if (result.getResultCode() == RESULT_OK) {
-            Uri imageUri = result.getData().getData().normalizeScheme();
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                binding.imageProfile.setImageBitmap(bitmap);
-                binding.addImage.setVisibility(View.GONE);
-                encodeImage = encodeImage(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

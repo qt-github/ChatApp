@@ -21,50 +21,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:text="Create new account"
+            android:text="@string/create_new_account"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_30sdp"
             android:textStyle="bold"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="144dp"
-            android:layout_height="144dp">
+        <FrameLayout
+            android:id="@+id/layoutImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="109dp"
-                android:layout_height="119dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:background="@drawable/background_image"
                 android:scaleType="centerCrop"
-                android:rotation="360"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.47000003" />
+                app:riv_oval="true" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/addImage"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
                 android:tint="@color/white"
                 android:background="@drawable/background_icon"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_add_photo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:src="@drawable/ic_add_photo" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
 
 
