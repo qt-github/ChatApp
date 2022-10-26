@@ -99,7 +99,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private final EventListener<QuerySnapshot> eventListener = (value, error) -> {
-        if(error !=null){
+        if(error != null){
             return;
         }
         if (value != null){

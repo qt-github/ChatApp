@@ -27,8 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements ConversionListene
     private void init(){
         converations = new ArrayList<>();
         conversationAdapter = new RecentConversationAdapter(converations, this);
-        binding.consersationsRecyclerView.setAdapter(conversationAdapter);
+        binding.conversationsRecyclerView.setAdapter(conversationAdapter);
         database = FirebaseFirestore.getInstance();
     }
 
@@ -128,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements ConversionListene
             }
             Collections.sort(converations, (obj1, obj2) -> obj2.dateObject.compareTo(obj1.dateObject));
             conversationAdapter.notifyDataSetChanged();
-            binding.consersationsRecyclerView.smoothScrollToPosition(0);
-            binding.consersationsRecyclerView.setVisibility(View.VISIBLE);
+            binding.conversationsRecyclerView.smoothScrollToPosition(0);
+            binding.conversationsRecyclerView.setVisibility(View.VISIBLE);
             binding.progressBar.setVisibility(View.GONE);
         }
     };

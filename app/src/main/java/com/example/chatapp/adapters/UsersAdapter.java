@@ -34,7 +34,7 @@ public class UsersAdapter extends  RecyclerView.Adapter<UsersAdapter.UserViewHol
                 parent,
                 false
         );
-        return null;
+        return new UserViewHolder(itemContainerUserBinding);
     }
 
     @Override
