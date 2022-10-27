@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity implements ConversionListener {
     }
 
     private void logOut() {
-        showToast("Logout");
+        showToast("Đăng xuất");
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
                 database.collection(Constants.KEY_COLLECTION_USERS).document(
@@ -154,7 +154,7 @@ public class MainActivity extends BaseActivity implements ConversionListener {
         updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
-                    preferenceManager.clear();
+//                    preferenceManager.clear();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                 })

@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApp"
         tools:targetApi="31">
+
         <activity
             android:name=".activities.ChatActivity"
             android:windowSoftInputMode="adjustResize">
@@ -21,13 +22,16 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".activities.UsersActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
+
         <activity
             android:name=".activities.RegisterActivity"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true"

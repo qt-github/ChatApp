@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //            startActivity(intent);
 //            finish();
-//        };
+//        }
         setListeners();
     }
 
@@ -83,8 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-
-
     private Boolean isValidLogInDetails(){
         if(binding.inputEmail.getText().toString().trim().isEmpty()){
             showToast("Nhập email");
@@ -98,6 +96,4 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
 }
